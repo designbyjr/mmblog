@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{sort?}', function () {
+Route::get('/', function () {
    return view('welcome');
 //    $model = new \App\Models\ImportBlog;
 //    $model->get();
@@ -24,3 +25,5 @@ Route::get('/{sort?}', function () {
 Auth::routes();
 
 Route::get('/home/{sort?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/post/create', [App\Http\Controllers\PostsController::class, 'index'])->name('post_form');
+Route::post('/post/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create_post');
