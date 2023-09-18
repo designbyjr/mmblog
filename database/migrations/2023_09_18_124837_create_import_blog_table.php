@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('import_blog', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unsigned();
+            $table->string("Title");
+            $table->longText("description");
+            $table->dateTime("publication_date");
             $table->timestamps();
         });
     }
