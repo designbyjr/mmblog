@@ -60,4 +60,7 @@ class ImportBlog extends Model
        return !isset($this->created_at) ? $this->cacheRetrieveAll() : $this->cacheRetrieveOne();
     }
 
+    public function getUserAttribute(){
+        return 'admin';
+    }
 }

@@ -35,7 +35,8 @@ class Blog extends Model
 	protected $fillable = [
 		'title',
 		'description',
-		'publication_date'
+		'publication_date',
+        'user_id'
 	];
 
     protected static function boot()

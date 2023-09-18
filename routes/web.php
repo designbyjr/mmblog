@@ -13,18 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-   // return view('welcome');
-    $model = new \App\Models\ImportBlog;
-    $model->get();
-    $model = new \App\Services\ImportService();
-    $model->run();
+Route::get('/{sort?}', function () {
+   return view('welcome');
+//    $model = new \App\Models\ImportBlog;
+//    $model->get();
+//    $model = new \App\Services\ImportService();
+//    $model->run();
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/{sort?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

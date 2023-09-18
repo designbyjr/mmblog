@@ -20,6 +20,7 @@ class BlogFactory extends Factory
             'title' => fake()->unique()->productName(),
             'description' => fake()->unique()->productDescription(),
             'publication_date' => now(),
+            'user_id' => random_int(1,2)
         ];
     }
 }
