@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('import_blog', function (Blueprint $table) {
             $table->id()->unsigned();
-            $table->string("Title");
+            $table->string("title");
             $table->longText("description");
             $table->dateTime("publication_date");
             $table->timestamps();

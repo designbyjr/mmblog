@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
    // return view('welcome');
     $model = new \App\Models\ImportBlog;
-
-    dd([$model->get(),$model->getKey()]);
+    $model->get();
+    $model = new \App\Services\ImportService();
+    $model->run();
 });
 
 Auth::routes();

@@ -33,20 +33,29 @@ class Blog extends Model
 	];
 
 	protected $fillable = [
-		'Title',
+		'title',
 		'description',
 		'publication_date'
 	];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::saved(function ($model) {
+            Cache::flush();
+            $this->cacheRetrieveAll();
+            $this->cacheRetrieveOne();
+        });
+        static::deleted(function ($model) {
+            Cache::flush();
+            $this->cacheRetrieveAll();
+            $this->cacheRetrieveOne();
+        });
+    }
+
+
     public function get()
     {
-        if(!isset($this->created_at)) {
-            return Cache::remember($this->cacheKey() . 'all', Carbon::now()->addMinutes(5), function () {
-                return $this->all();
-            });
-        }
-        return Cache::remember($this->cacheKey() . $this->getKey(), Carbon::now()->addMinutes(5), function () {
-            return $this;
-        });
+        return !isset($this->created_at) ? $this->cacheRetrieveAll() : $this->cacheRetrieveOne();
     }
 }
