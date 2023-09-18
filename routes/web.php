@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   // return view('welcome');
+    $model = new \App\Models\ImportBlog;
+
+    dd([$model->get(),$model->getKey()]);
 });
 
 Auth::routes();

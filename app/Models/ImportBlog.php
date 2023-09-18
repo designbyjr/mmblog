@@ -6,12 +6,15 @@
 
 namespace App\Models;
 
+use App\Traits\ModelTraits;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class ImportBlog
- * 
+ *
  * @property int $id
  * @property string $Title
  * @property string $description
@@ -23,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ImportBlog extends Model
 {
+    use HasFactory, ModelTraits;
 	protected $table = 'import_blog';
 
 	protected $casts = [
@@ -34,4 +38,18 @@ class ImportBlog extends Model
 		'description',
 		'publication_date'
 	];
+
+
+    public function get()
+    {
+        if(!isset($this->created_at)) {
+            return Cache::remember($this->cacheKey() . 'all', Carbon::now()->addMinutes(5), function () {
+                return $this->all();
+            });
+        }
+        return Cache::remember($this->cacheKey() . $this->getKey(), Carbon::now()->addMinutes(5), function () {
+            return $this;
+        });
+    }
+
 }
