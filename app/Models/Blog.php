@@ -44,13 +44,13 @@ class Blog extends Model
         parent::boot();
         static::saved(function ($model) {
             Cache::flush();
-            $this->cacheRetrieveAll();
-            $this->cacheRetrieveOne();
+            $model->cacheRetrieveAll();
+            $model->cacheRetrieveOne();
         });
         static::deleted(function ($model) {
             Cache::flush();
-            $this->cacheRetrieveAll();
-            $this->cacheRetrieveOne();
+            $model->cacheRetrieveAll();
+            $model->cacheRetrieveOne();
         });
     }
 
@@ -58,5 +58,10 @@ class Blog extends Model
     public function get()
     {
         return !isset($this->created_at) ? $this->cacheRetrieveAll() : $this->cacheRetrieveOne();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

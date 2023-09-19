@@ -19,8 +19,12 @@
         <section class="form-control">
             <form method="post" action="{{route('create_post')}}">
                 <!-- Name input -->
+
                 @csrf
                 <div class="form-outline mb-4">
+                    @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <div>
                         <label class="form-label" for="form4Example1">Title</label>
                     </div>
@@ -30,6 +34,9 @@
 
                 <!-- Message input -->
                 <div class="form-outline mb-4">
+                    @error('description')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <div>
                         <label class="form-label" for="form4Example3">Description</label>
                     </div>

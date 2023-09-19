@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Cache;
  * Class ImportBlog
  *
  * @property int $id
- * @property string $Title
+ * @property string $title
  * @property string $description
  * @property Carbon $publication_date
  * @property Carbon|null $created_at
@@ -34,10 +34,12 @@ class ImportBlog extends Model
 	];
 
 	protected $fillable = [
+        'id',
 		'title',
 		'description',
 		'publication_date'
 	];
+
 
     protected static function boot()
     {

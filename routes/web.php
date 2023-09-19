@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-   return view('welcome');
-//    $model = new \App\Models\ImportBlog;
-//    $model->get();
-//    $model = new \App\Services\ImportService();
-//    $model->run();
+  return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home/{sort?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/post/create', [App\Http\Controllers\PostsController::class, 'index'])->name('post_form');
-Route::post('/post/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create_post');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/post/create', [App\Http\Controllers\PostsController::class, 'index'])->name('post_form');
+    Route::post('/post/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create_post');
+});
+
+

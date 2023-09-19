@@ -22,6 +22,11 @@ class ImportService
             $data->throwIfClientError();
             $data = $data->json('articles');
             $cache = Cache::get('import_blogall');
+            if (empty($cache))
+            {
+                $model = new ImportBlog();
+                $cache = $model->get();
+            }
 
             $ids = Arr::pluck($data,'id');
             $posts = array_diff( $ids,$cache->modelKeys());
@@ -31,10 +36,12 @@ class ImportService
 
             foreach ($filtered as $key => $post)
             {
-                $post['publication_date'] = (Carbon::make($post['publishedAt']))->toDateTimeString();
-                unset($post['publishedAt']);
-                unset($filtered[$key]);
-                ImportBlog::create($post);
+                $model = new ImportBlog();
+                $model->publication_date = (Carbon::make($post['publishedAt']))->toDateTimeString();
+                $model->title = htmlentities($post['title']);
+                $model->description = htmlentities($post['description']);
+                $model->id = $post['id'];
+                $model->save();
             }
         }
         catch (RequestException $e)
@@ -42,5 +49,6 @@ class ImportService
             Log::error($e->getMessage());
         }
 
+        Log::notice("Import completed at ". Carbon::now()->toDateTimeString());
     }
 }

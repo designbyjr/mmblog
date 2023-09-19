@@ -15,7 +15,7 @@
         ================================================== -->
         <section class="recent-posts">
             <div class="section-title">
-                <h2><span>All Stories</span></h2>
+                <h2><span>My Stories</span></h2>
             </div>
             <div class="card-header col-12 mb-4">
                 <div class="push-10 col-2">
