@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-   return view('welcome');
-//    $model = new \App\Models\ImportBlog;
-//        dd($model::find(1)->user);
-//    $model = new \App\Services\ImportService();
-//    $model->run();
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//POST METHODS SORTING
+Route::post('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/post/read/{model}/{id}', [App\Http\Controllers\PostsController::class, 'read'])->name('read_post');
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashIndex'])->name('dashboard');
+    //POST METHOD
+    Route::post('/dashboard', [App\Http\Controllers\HomeController::class, 'dashIndex'])->name('dashboard');
+
     Route::get('/post/create', [App\Http\Controllers\PostsController::class, 'index'])->name('post_form');
     Route::post('/post/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create_post');
 });

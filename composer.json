@@ -36,6 +36,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
+            "docker ps",
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
@@ -46,7 +47,13 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "docker ps",
+            "@php artisan sail:install",
+            "alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'",
+            "sail up",
+            "sail artisan migrate:fresh --seed",
+            "sail artisan schedule:work"
         ]
     },
     "extra": {

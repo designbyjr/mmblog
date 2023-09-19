@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\ImportBlog;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +35,13 @@ class PostsController extends Controller
 
         Blog::create($array);
 
-        return redirect(route('home'));
+        return redirect(route('dashboard'));
+    }
+
+    public function read(Request $request, string $model, int $id)
+    {
+        $model = 'App\\Models\\'.$model;
+        $blogPost = (new $model())::find($id);
+        return view('post',compact('blogPost'));
     }
 }

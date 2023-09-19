@@ -60,6 +60,13 @@ class Blog extends Model
         return !isset($this->created_at) ? $this->cacheRetrieveAll() : $this->cacheRetrieveOne();
     }
 
+    public function getUserAttribute()
+    {
+        return Cache::remember('user', Carbon::now()->addMinutes(5), function () {
+            return $this->user()->first(['id','name']);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
