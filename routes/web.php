@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+   return view('welcome');
+//    $model = new \App\Models\ImportBlog;
+//        dd($model::find(1)->user);
+//    $model = new \App\Services\ImportService();
+//    $model->run();
 });
 
 Auth::routes();

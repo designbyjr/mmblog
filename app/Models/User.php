@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
 
@@ -46,4 +47,16 @@ class User extends Authenticatable
 		'password',
 		'remember_token'
 	];
+
+    public function getBlogsAttribute()
+    {
+        return Cache::remember('user_blogs', Carbon::now()->addMinutes(5), function () {
+            return $this->blogs()->get();
+        });
+    }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
 }
