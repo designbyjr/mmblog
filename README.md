@@ -1,5 +1,5 @@
 
-# Mitchell Mcdonald Blog
+# Mitchell Mcdurmott Blog
 
 I have designed, developed, and containerized a MVC for a simple web page application using Laravel and Docker.
 
